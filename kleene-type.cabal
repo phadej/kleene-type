@@ -1,0 +1,107 @@
+cabal-version: 2.2
+name: kleene-type
+version: 0
+
+flag lens
+  description: Lensy features
+  manual: True
+  default: True
+
+flag kleene-top
+  description: Add TOP to RE
+  manual: True
+  default: True
+
+library
+  default-language: Haskell2010
+  hs-source-dirs:   src plugin
+  ghc-options:      -Wall
+  exposed-modules:
+    Kleene.Type
+    Kleene.Type.Examples
+    Kleene.Type.Examples.KleeneSH
+    KleenePlugin
+    KleenePlugin.Debug
+    KleenePlugin.Elaborate
+    KleenePlugin.Matching
+    KleenePlugin.Names
+    KleenePlugin.SourcePlugin
+    KleenePlugin.SWT
+    KleenePlugin.Synthesis
+    KleenePlugin.TcPlugin
+    KleenePlugin.TypeEq
+    KleenePlugin.Types
+  build-depends:
+    , base           ^>=4.12
+    , containers
+    , ghc            ^>=8.6
+    , process        ^>=1.6.3.0
+    , syb            ^>=0.7
+    , transformers   ^>=0.5.5.0
+    , unification-fd ^>=0.10.0.1
+
+  if flag(lens)
+    build-depends:
+      , lens    ^>=4.17
+
+  default-extensions:
+    CPP
+
+  if flag(kleene-top)
+    cpp-options: -DKLEENE_TOP
+
+test-suite kleene-type-tests
+  type: exitcode-stdio-1.0
+  main-is: Tests.hs
+
+  default-language: Haskell2010
+  hs-source-dirs:   test
+  ghc-options:      -Wall
+
+  build-depends:
+    , base
+    , kleene-type
+    , QuickCheck  ^>=2.11.3
+
+  default-extensions:
+    CPP
+
+  if flag(kleene-top)
+    cpp-options: -DKLEENE_TOP
+
+
+test-suite kleenesh-example
+  type: exitcode-stdio-1.0
+  main-is: KleeneSHExample.hs
+
+  default-language: Haskell2010
+  hs-source-dirs:   test
+  ghc-options:      -Wall
+
+  build-depends:
+    , base
+    , kleene-type
+
+  default-extensions:
+    CPP
+
+  if flag(kleene-top)
+    cpp-options: -DKLEENE_TOP
+
+test-suite kleene-demo
+  type: exitcode-stdio-1.0
+  main-is: KleeneDemo.hs
+
+  default-language: Haskell2010
+  hs-source-dirs:   test
+  ghc-options:      -Wall
+
+  build-depends:
+    , base
+    , kleene-type
+
+  default-extensions:
+    CPP
+
+  if flag(kleene-top)
+    cpp-options: -DKLEENE_TOP

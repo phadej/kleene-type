@@ -1,0 +1,8 @@
+packages: .
+with-compiler: ghc-8.6.1
+-- constraints: kleene-type -lens
+-- constraints: kleene-type -kleene-top
+
+package kleene-type
+  ghc-options: -Werror
+
